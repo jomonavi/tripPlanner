@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/javascripts/map.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB629e0OsoZA7dx4HZaCED73jCCrZ-rwt8&sensor=true"></script>
+  </head>
+  <body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"> TripPlanner</span>
+	      </div>
+
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+	        <li><a href="#">About</a></li>
+	        <li><a href="#">Contact</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div id="googleMap" class="col-md-8">
+					<!-- Map Goes Here -->
+				<div id="map-canvas" style="width: 100%; height: 100vh"></div>
+
+			</div>
+		    <div id="homeContent" class="col-md-4">
+
+			    <div id="dbContent">
+			    	<div id="lists">
+			    		{% block content %}{% endblock %}
+			    	</div>
+
+			    	<div class="panel panel-default">
+  						<div class="panel-body">
+    						Day X
+ 	 					</div>
+					</div>
+
+			    	<div id="dailyAct">
+			    		<div class="panel panel-default">
+						  <div class="panel-heading">My Hotel</div>
+							  <div class="panel-body">
+							    Panel content
+							  </div>
+						</div>
+
+						<div class="panel panel-default">
+						  <div class="panel-heading">
+						    <h3 class="panel-title">My Restaurants</h3>
+						  </div>
+						  <div class="panel-body">
+						    Panel content
+						  </div>
+						</div>
+
+						<div class="panel panel-default">
+						  <div class="panel-heading">My Things To Do</div>
+							  <div class="panel-body">
+							    Panel content
+							  </div>
+						</div>
+
+			    	</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+  </body>
+</html>
+

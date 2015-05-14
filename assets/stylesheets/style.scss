@@ -1,0 +1,57 @@
+* {
+	box-sizing: border-box !important;
+}
+
+@mixin clearfix() {
+  &:after {
+    content: " ";
+    display: table;
+    clear:both;
+  }
+}
+
+body {
+	background-color: silver;
+}
+
+
+.container {
+	@include clearfix();
+	width: 100%;
+	margin-left: 10px;
+	margin-top: 70px;
+}
+
+.row {
+	margin-right: 20px;
+}
+
+#map-canvas {
+	// padding-top: 30px;
+}
+
+#homeContent {
+	background-color: grey;
+	height: 100vh;
+	padding: 10px;
+}
+
+#lists {
+	display: inline-block;
+}
+
+select {
+	width: 100%;
+	-webkit-appearance: menulist-button;
+	margin-bottom: 10px;
+}
+
+.panel {
+	width: 70%;
+}
+
+
+
+
+
+
