@@ -1,87 +1,163 @@
 <!DOCTYPE html>
 <html>
+  <title>Trip Planner — {% block title %}Home{% endblock %}</title>
   <head>
-    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="/javascripts/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB629e0OsoZA7dx4HZaCED73jCCrZ-rwt8&sensor=true"></script>
+    <link href="/stylesheets/style.css" rel="stylesheet">
   </head>
   <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"> TripPlanner</span>
-	      </div>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-pad" role="navigation">
+      <div class="container-flex">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand clearfix" href="/"><span class="glyphicon glyphicon-map-marker"></span><span>Trip Planner</span></a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  {% block content %}{% endblock %}
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB629e0OsoZA7dx4HZaCED73jCCrZ-rwt8&sensor=true"></script>
 
-	    <!-- Collect the nav links, forms, and other content for toggling -->
-	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-	        <li><a href="#">About</a></li>
-	        <li><a href="#">Contact</a></li>
-	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
 
-	<div class="container">
-		<div class="row">
-			<div id="googleMap" class="col-md-8">
-					<!-- Map Goes Here -->
-				<div id="map-canvas" style="width: 100%; height: 100vh"></div>
+    <script>
+    var map;
+    var marker;
+    var hotelLocation;
 
-			</div>
-		    <div id="homeContent" class="col-md-4">
+     function drawLocation (location, opts) {
+          if (typeof opts !== 'object') opts = {};
+          opts.position = new google.maps.LatLng(location[0], location[1]);
+          opts.map = map;
 
-			    <div id="dbContent">
-			    	<div id="lists">
-			    		{% block content %}{% endblock %}
-			    	</div>
+          marker = new google.maps.Marker(opts);
+          return marker;
+        }
 
-			    	<div class="panel panel-default">
-  						<div class="panel-body">
-    						Day X
- 	 					</div>
-					</div>
+      function initialize_gmaps() {
+        // initialize new google maps LatLng object
+        var myLatlng = new google.maps.LatLng(40.705189,-74.009209);
+        // set the map options hash
+        var mapOptions = {
+          center: myLatlng,
+          zoom: 13,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          styles: styleArr
+        };
+        // get the maps div's HTML obj
+        var map_canvas_obj = document.getElementById("map-canvas");
+        // initialize a new Google Map with the options
+        map = new google.maps.Map(map_canvas_obj, mapOptions);
+        // Add the marker to the map
+        // marker = new google.maps.Marker({
+        //   position: myLatlng,
+        //   title:"Hello World!"
+        // });
+        // hotelLocation = [40.705137, -74.007624];
 
-			    	<div id="dailyAct">
-			    		<div class="panel panel-default">
-						  <div class="panel-heading">My Hotel</div>
-							  <div class="panel-body">
-							    Panel content
-							  </div>
-						</div>
+        // var restaurantLocations = [
+        //   [40.705137, -74.013940],
+        //   [40.708475, -74.010846]
+        // ];
+        // var thingToDoLocations = [
+        //   [40.716291, -73.995315],
+        //   [40.707119, -74.003602]
+        // ];
+       
+        // drawLocation(hotelLocation, {
+        //   // icon: '/images/lodging_0star.png'
+        // });
+        // restaurantLocations.forEach(function (loc) {
+        //   drawLocation(loc, {
+        //     // icon: '/images/restaurant.png'
+        //   });
+        // });
+        // thingToDoLocations.forEach(function (loc) {
+        //   drawLocation(loc, {
+        //     // icon: '/images/star-3.png'
+        //   });
+        // });
+      }
 
-						<div class="panel panel-default">
-						  <div class="panel-heading">
-						    <h3 class="panel-title">My Restaurants</h3>
-						  </div>
-						  <div class="panel-body">
-						    Panel content
-						  </div>
-						</div>
+      $(document).ready(function() {
+        initialize_gmaps();
+      });
+      var styleArr = [
+        {
+          'featureType': 'landscape',
+          'stylers': [
+            { 'saturation': -100 },
+            { 'lightness': 60 }
+          ]
+        },
+        {
+          'featureType': 'road.local',
+          'stylers': [
+            { 'saturation': -100 },
+            { 'lightness': 40 },
+            { 'visibility': 'on' }
+          ]
+        },
+        {
+          'featureType': 'transit',
+          'stylers': [
+            { 'saturation': -100 },
+            { 'visibility': 'simplified' }
+          ]
+        },
+        {
+          'featureType': 'administrative.province',
+          'stylers': [
+            { 'visibility': 'off' }
+          ]
+        },
+        {
+          'featureType': 'water',
+          'stylers': [
+            { 'visibility': 'on' },
+            { 'lightness': 30 }
+          ]
+        },
+        {
+          'featureType': 'road.highway',
+          'elementType': 'geometry.fill',
+          'stylers': [
+            { 'color': '#ef8c25' },
+            { 'lightness': 40 }
+          ]
+        },
+        {
+          'featureType': 'road.highway',
+          'elementType': 'geometry.stroke',
+          'stylers': [
+            { 'visibility': 'off' }
+          ]
+        },
+        {
+          'featureType': 'poi.park',
+          'elementType': 'geometry.fill',
+          'stylers': [
+              { 'color': '#b6c54c' },
+              { 'lightness': 40 },
+              { 'saturation': -40 }
+          ]
+        }
+      ];
+    </script>
+    <script src="/javascripts/jQFunctionality.js"></script>
 
-						<div class="panel panel-default">
-						  <div class="panel-heading">My Things To Do</div>
-							  <div class="panel-body">
-							    Panel content
-							  </div>
-						</div>
-
-			    	</div>
-			    </div>
-			</div>
-		</div>
-	</div>
   </body>
 </html>
-
